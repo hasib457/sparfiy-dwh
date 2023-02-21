@@ -38,11 +38,11 @@ staging_events_table_create = """
         location VARCHAR(255),
         method VARCHAR(10),
         page VARCHAR(50),
-        registration TIMESTAMP,
+        registration BIGINT,
         session_id INTEGER,
         song VARCHAR(255),
         status INTEGER,
-        ts TIMESTAMP,
+        ts BIGINT,
         user_agent VARCHAR(255),
         user_id INTEGER
 );
@@ -58,9 +58,9 @@ staging_songs_table_create = """
         artist_latitude NUMERIC, 
         artist_longitude NUMERIC, 
         artist_location VARCHAR(255), 
-        artist_name VARCHAR(255),
+        artist_name VARCHAR(MAX),
         song_id VARCHAR(255), 
-        title VARCHAR(255),
+        title VARCHAR(MAX),
         duration NUMERIC, 
         year INTEGER);
 """
