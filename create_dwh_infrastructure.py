@@ -51,7 +51,7 @@ def config():
     DWH_DB_PASSWORD = config.get("CLUSTER", "DB_PASSWORD")
     DB_PORT = config.get("CLUSTER", "DB_PORT")
     VPCID = config.get("CLUSTER", "VPCID")
-
+    DWH_ROLE_ARN = config.get("IAM_ROLE", "ARN")
     DWH_IAM_ROLE_NAME = config.get("CLUSTER", "DWH_IAM_ROLE_NAME")
 
     return {
@@ -66,7 +66,8 @@ def config():
         "DWH_IAM_ROLE_NAME": DWH_IAM_ROLE_NAME,
         "KEY": KEY,
         "SECRET": SECRET,
-        "VPCID": VPCID
+        "VPCID": VPCID,
+        "ARN": DWH_ROLE_ARN
     }
 
 
@@ -100,7 +101,7 @@ def create_iam_role(iam, DWH_IAM_ROLE_NAME, KEY, SECRET):
     Creates an IAM role for the Redshift cluster and attaches a policy. It then returns the ARN of the IAM role.
     """
     try:
-        print("[INFO] Creating a new IAM Role")
+        print("[INFO] Creating a new IAM Role:", DWH_IAM_ROLE_NAME)
         dwhRole = iam.create_role(
             Path="/",
             RoleName=DWH_IAM_ROLE_NAME,
@@ -135,7 +136,7 @@ def create_iam_role(iam, DWH_IAM_ROLE_NAME, KEY, SECRET):
 
     config = configparser.ConfigParser()
     config.read_file(open("dwh.cfg"))
-    config.set("IAM_ROLE", "ARN", roleArn)
+    # config.set("IAM_ROLE", "ARN", roleArn)
 
     # write the changes to the configuration file
     with open("dwh.cfg", "w") as configfile:
@@ -203,7 +204,7 @@ def create_redshift_cluster(
     
     config.set("CLUSTER", "HOST", DWH_ENDPOINT)
     config.set("CLUSTER", "VPCID", VPCID)
-    config.set("CLUSTER", "DWH_ROLE_ARN", DWH_ROLE_ARN)
+    config.set("IAM_ROLE", "ARN", DWH_ROLE_ARN)
 
     # write the changes to the configuration file
     with open("dwh.cfg", "w") as configfile:

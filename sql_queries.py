@@ -193,7 +193,7 @@ user_table_insert = """
 song_table_insert = """
     INSERT INTO sparkify.songs(
         SELECT 
-            DISTINCIT song_id,
+            DISTINCT song_id,
             title,
             artist_id,
             year,
@@ -205,7 +205,7 @@ song_table_insert = """
 artist_table_insert = """
     INSERT INTO sparkify.artists(
         SELECT 
-            DISTINCIT artist_id,
+            DISTINCT artist_id,
             artist_name,
             artist_location,
             artist_latitude,

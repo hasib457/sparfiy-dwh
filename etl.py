@@ -28,7 +28,7 @@ def main():
     conn = psycopg2.connect("host={} dbname={} user={} password={} port={}".format(HOST, DB_NAME, DB_USER, DB_PASSWORD, DB_PORT))
     cur = conn.cursor()
     
-    load_staging_tables(cur, conn)
+    # load_staging_tables(cur, conn)
     insert_tables(cur, conn)
 
     conn.close()
